@@ -42,14 +42,14 @@ class IndexHandler(RequestHandler):
         err_title = self.get_argument("title", "")
         err_content = self.get_argument("content", "")
         if err_code:
-            self.send_error(err_code, title=err_title, content=err_content)
+            self.send_error(err_code, title=err_title, content=err_content)  # 使用send_error后就不要再向缓冲区写内容了
         else:
             self.write("主页")
 
     def write_error(self, status_code, **kwargs):
         self.write(u"<h1>出错了，程序员GG正在赶过来！</h1>")
-        self.write(u"<p>错误名：%s</p>" % kwargs["title"])
-        self.write(u"<p>错误详情：%s</p>" % kwargs["content"])
+        self.write(u"<p>错误名：%s</p>" % kwargs.get("title"))
+        self.write(u"<p>错误详情：%s</p>" % kwargs.get("content"))
 
 
 
